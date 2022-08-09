@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PuzzlePiece extends StatefulWidget {
@@ -37,12 +38,27 @@ class PuzzlePieceState extends State<PuzzlePiece> {
 
   @override
   Widget build(BuildContext context) {
-    final imageWidth = MediaQuery.of(context).size.width;
-    final imageHeight = MediaQuery.of(context).size.height *
-        MediaQuery.of(context).size.width /
-        widget.imageSize.width;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom;
+    print(
+        "padding : ${AppBar().preferredSize.height}+${MediaQuery.of(context).padding.top}+"
+        "${MediaQuery.of(context).padding.bottom}");
+
+    final ratio = min(screenWidth / widget.imageSize.width,
+        screenHeight / widget.imageSize.height);
+    final imageWidth = (ratio * widget.imageSize.width);
+    final imageHeight = ratio * widget.imageSize.height;
+
     final pieceWidth = imageWidth / widget.maxCol;
     final pieceHeight = imageHeight / widget.maxRow;
+
+    print("ratio: $ratio");
+    print("screen: $screenWidth , $screenHeight");
+    print("image: $imageWidth , $imageHeight");
+    print("piece: $pieceWidth , $pieceHeight");
 
     if (top == null) {
       top = Random().nextInt((imageHeight - pieceHeight).ceil()).toDouble();

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.exasoftinfotech.puzzle_app">
+    package="com.exasoftinfotech.jigshawpuzzle">
    <application
-        android:label="puzzle_app"
+        android:label="Jigsaw Puzzle"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

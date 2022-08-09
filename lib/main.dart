@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'HomePage.dart';
+import 'color_constant.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,11 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Puzzle',
+      debugShowCheckedModeBanner: false,
+      title: 'Jigsaw Puzzle',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: ColorConst.createMaterialColor(ColorConst.themeColor),
+        scaffoldBackgroundColor: Colors.transparent,
       ),
-      home: const HomePage(title: 'Flutter Puzzle'),
+      home: const HomePage(title: 'Jigsaw Puzzle'),
     );
   }
 }

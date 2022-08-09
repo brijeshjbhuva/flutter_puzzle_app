@@ -1,4 +1,4 @@
-package com.exasoftinfotech.flutter_puzzle_app
+package com.exasoftinfotech.jigshawpuzzle
 
 import io.flutter.embedding.android.FlutterActivity
 

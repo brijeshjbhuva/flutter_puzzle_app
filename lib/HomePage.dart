@@ -22,6 +22,12 @@ class HomePageState extends State<HomePage> {
   XFile? _image;
   List<Widget> pieces = [];
 
+  void clear() {
+    setState(() {
+      _image = null;
+    });
+  }
+
   Future getImage(ImageSource source) async {
     var image = await ImagePicker().pickImage(source: source);
     if (image != null) {
@@ -29,6 +35,16 @@ class HomePageState extends State<HomePage> {
         _image = image;
         pieces.clear();
       });
+      var width = MediaQuery.of(context).size.width;
+      var height = MediaQuery.of(context).size.height;
+      var padding = MediaQuery.of(context).padding.top;
+      var safeHeight = height - padding;
+      var boxSize = (width < safeHeight) ? width : safeHeight;
+      print("width : $width");
+      print("height : $height");
+      print("padding : $padding");
+      print("safeHeight : $safeHeight");
+      print("boxSize : $boxSize");
       if (kIsWeb) {
         splitImage(Image.network(image.path));
       } else {
@@ -100,10 +116,24 @@ class HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: SafeArea(
-        child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.orange, Colors.white, Colors.green]),
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Center(
             child: _image == null
                 ? const Text('No image selected.')
-                : Stack(children: pieces)),
+                : Stack(children: pieces),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -127,6 +157,14 @@ class HomePageState extends State<HomePage> {
                         title: const Text('Gallery'),
                         onTap: () {
                           getImage(ImageSource.gallery);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.delete),
+                        title: const Text('Clear'),
+                        onTap: () {
+                          clear();
                           Navigator.pop(context);
                         },
                       ),
